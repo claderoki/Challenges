@@ -1,5 +1,9 @@
 package com.challenges;
 
+import com.challenges.base.CodeChallenge;
+import com.challenges.base.InputOutput;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,16 +71,15 @@ public class DecodeString extends CodeChallenge<String, String> {
     }
 
     @Override
-    public Map<String, String> getInputAndDesiredOutputs() {
-        return Map.of(
-            "3[a]2[bc]", "aaabcbc",
-            "3[a2[c]]", "accaccacc",
-            "2[abc]3[cd]ef", "abcabccdcdcdef",
-            "abc3[cd]xyz", "abccdcdcdxyz",
-            "3[z]2[2[y]pq4[2[jk]e1[f]]]ef", "zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef",
-            "2[ab3[cd]]4[xy]", "abcdcdcdabcdcdcdxyxyxyxy",
-            "3[a10[bc]]", "abcbcbcbcbcbcbcbcbcbcabcbcbcbcbcbcbcbcbcbcabcbcbcbcbcbcbcbcbcbc"
-
+    public List<InputOutput<String, String>> getInputAndDesiredOutputs() {
+        return List.of(
+            new InputOutput<>("3[a]2[bc]", "aaabcbc"),
+            new InputOutput<>("3[a2[c]]", "accaccacc"),
+            new InputOutput<>("2[abc]3[cd]ef", "abcabccdcdcdef"),
+            new InputOutput<>("abc3[cd]xyz", "abccdcdcdxyz"),
+            new InputOutput<>("3[z]2[2[y]pq4[2[jk]e1[f]]]ef", "zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef"),
+            new InputOutput<>("2[ab3[cd]]4[xy]", "abcdcdcdabcdcdcdxyxyxyxy"),
+            new InputOutput<>("3[a10[bc]]", "abcbcbcbcbcbcbcbcbcbcabcbcbcbcbcbcbcbcbcbcabcbcbcbcbcbcbcbcbcbc)")
         );
     }
 

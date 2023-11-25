@@ -1,5 +1,8 @@
 package com.challenges;
 
+import com.challenges.base.CodeChallenge;
+import com.challenges.base.InputOutput;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,20 +72,16 @@ public class Asteroids extends CodeChallenge<int[], int[]> {
         return Arrays.equals(output1, output2);
     }
 
-    private static int[] get(int... asteroids) {
-        return asteroids;
-    }
-
     @Override
-    public Map<int[], int[]> getInputAndDesiredOutputs() {
-        return Map.of(
-            get(-2,-1,2,-2), get(-2,-1),
-            get(-2,1,-2,1), get(-2,-2,1),
-            get(5,10,-5) , get(5,10),
-            get(8,-8), get(),
-            get(10,2,-5), get(10),
-            get(-2,-1,1,2), get(-2,-1,1,2),
-            get(-2,1,-2,1), get(-2,-2,1)
+    public List<InputOutput<int[], int[]>> getInputAndDesiredOutputs() {
+        return List.of(
+            new InputOutput<>(array(-2,-1,2,-2), array(-2,-1)),
+            new InputOutput<>(array(-2,1,-2,1), array(-2,-2,1)),
+            new InputOutput<>(array(5,10,-5) , array(5,10)),
+            new InputOutput<>(array(8,-8), array()),
+            new InputOutput<>(array(10,2,-5), array(10)),
+            new InputOutput<>(array(-2,-1,1,2), array(-2,-1,1,2)),
+            new InputOutput<>(array(-2,1,-2,1), array(-2,-2,1))
         );
     }
 }
