@@ -63,8 +63,7 @@ public class DecodeString extends CodeChallenge<String, String> {
     }
 
     public String test(String input) {
-        var r = decodeString(input);
-        return r;
+        return decodeString(input);
     }
 
     @Override
