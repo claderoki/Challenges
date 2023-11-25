@@ -11,11 +11,14 @@ public abstract class CodeChallenge<I, O> {
     }
 
     public void testAll() {
-        getInputAndDesiredOutputs().forEach((i,o) -> {
-            var output = test(i);
-            if (!isEqual(output, o)) {
-                throw new RuntimeException(output + " != " + o);
+        int i = 0;
+        for(var entry: getInputAndDesiredOutputs().entrySet()) {
+            var output = test(entry.getKey());
+            if (!isEqual(output, entry.getValue())) {
+                throw new RuntimeException(output + " != " + entry.getValue());
             }
-        });
+            i++;
+        }
+        System.out.printf("All test cases succeeded (%s)%n", i);
     }
 }
