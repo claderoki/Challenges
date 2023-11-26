@@ -1,6 +1,5 @@
 package com.challenges.base;
 
-
 public class InputOutput<I, O> {
     public final I input;
     public final O output;

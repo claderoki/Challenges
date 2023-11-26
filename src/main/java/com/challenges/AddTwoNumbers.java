@@ -23,8 +23,8 @@ public class AddTwoNumbers extends CodeChallenge<AddTwoNumbers.AddTwoNumbersInpu
     }
 
     public static class ListNode {
-        int val;
-        ListNode next;
+        final int val;
+        final ListNode next;
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;

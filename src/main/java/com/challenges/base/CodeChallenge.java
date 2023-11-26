@@ -25,11 +25,11 @@ public abstract class CodeChallenge<I, O> {
                 throw new RuntimeException(format(output) + " != " + format(inputOutput.output));
             }
             long millis = endTime - startTime;
-            System.out.printf("Test cases succeeded (%s/%s) in %s ms\n", i, i, millis);
             totalMillis += millis;
             i++;
+            System.out.printf("Test cases succeeded (%s/%s) in %s ms\n", i, i, millis);
         }
-        System.out.printf("All test cases succeeded (%s/%s) in %s", i, i, totalMillis);
+        System.out.printf("All test cases succeeded (%s/%s) in %s ms", i, i, totalMillis);
     }
 
     protected int[] array(int... values) {
