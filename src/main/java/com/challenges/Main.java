@@ -2,6 +2,6 @@ package com.challenges;
 
 public class Main {
     public static void main(String[] args) {
-        new ValidSudoku().testAll();
+        new LongestPalindromicSubstring().testAll();
     }
 }

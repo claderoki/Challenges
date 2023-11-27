@@ -12,6 +12,7 @@ import java.util.List;
 public class ValidSudoku extends CodeChallenge<char[][], Boolean> {
     @Override
     protected Boolean test(char[][] board) {
+        int blockSize = 3;
         for (int row = 0; row < board.length; row++) {
             HashSet<Character> currentRow = new HashSet<>();
             HashSet<Character> currentColumn = new HashSet<>();
@@ -26,11 +27,8 @@ public class ValidSudoku extends CodeChallenge<char[][], Boolean> {
                 if (c != '.' && !currentColumn.add(c)) {
                     return false;
                 }
-                int blockX = (row%3*3)+j/3;
-                int blockY = j%3;
-                if (row > 0 && row/3 > 0) {
-                    blockY += (row/3*3);
-                }
+                int blockX = row % blockSize * blockSize + j / blockSize;
+                int blockY = j % blockSize + row / blockSize * blockSize;
 
                 char b = board[blockX][blockY];
                 if (b != '.' && !currentBlock.add(b)) {
