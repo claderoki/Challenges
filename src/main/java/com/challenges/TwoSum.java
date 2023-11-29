@@ -5,7 +5,7 @@ import com.challenges.base.InputOutput;
 
 import java.util.*;
 
-/**
+/** Completed
  * <a href="https://leetcode.com/problems/two-sum/">Link to challenge</a>
  */
 public class TwoSum extends CodeChallenge<TwoSum.TwoSumInput, int[]> {

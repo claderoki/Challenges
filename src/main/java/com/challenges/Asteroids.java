@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
+/** Completed
  * https://leetcode.com/problems/asteroid-collision
  */
 public class Asteroids extends CodeChallenge<int[], int[]> {

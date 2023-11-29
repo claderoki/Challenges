@@ -6,6 +6,10 @@ public abstract class CodeChallenge<I, O> {
     protected abstract O test(I input);
     protected abstract List<InputOutput<I, O>> getInputAndDesiredOutputs();
 
+    public InputOutput<I, O> io(I input, O output) {
+        return new InputOutput<>(input, output);
+    }
+
     public boolean isEqual(O output1, O output2) {
         return output1.equals(output2);
     }

@@ -6,7 +6,7 @@ import com.challenges.base.InputOutput;
 import java.util.List;
 import java.util.Stack;
 
-/**
+/** Completed
  * <a href="https://leetcode.com/problems/add-two-numbers/">Link to challenge</a>
  */
 public class AddTwoNumbers extends CodeChallenge<AddTwoNumbers.AddTwoNumbersInput, AddTwoNumbers.ListNode> {

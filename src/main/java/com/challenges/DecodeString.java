@@ -5,7 +5,7 @@ import com.challenges.base.InputOutput;
 
 import java.util.List;
 
-/**
+/** Completed
  * https://leetcode.com/problems/decode-string
  */
 public class DecodeString extends CodeChallenge<String, String> {

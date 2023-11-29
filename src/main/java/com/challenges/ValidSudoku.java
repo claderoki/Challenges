@@ -6,7 +6,7 @@ import com.challenges.base.InputOutput;
 import java.util.HashSet;
 import java.util.List;
 
-/**
+/** Completed
  * <a href="https://leetcode.com/problems/valid-sudoku/">Link to challenge</a>
  */
 public class ValidSudoku extends CodeChallenge<char[][], Boolean> {
