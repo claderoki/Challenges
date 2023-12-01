@@ -1,4 +1,4 @@
-package com.challenges;
+package com.challenges.leetcode;
 
 import com.challenges.base.CodeChallenge;
 import com.challenges.base.InputOutput;
@@ -7,17 +7,17 @@ import java.util.List;
 
 /**
  * Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
- *
+ * <p>
  * The overall run time complexity should be O(log (m+n)).
- *
+ * <p>
  * Example 1:
- *
+ * <p>
  * Input: nums1 = [1,3], nums2 = [2]
  * Output: 2.00000
  * Explanation: merged array = [1,2,3] and median is 2.
- *
+ * <p>
  * Example 2:
- *
+ * <p>
  * Input: nums1 = [1,2], nums2 = [3,4]
  * Output: 2.50000
  * Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
@@ -28,6 +28,7 @@ public class MedianOfTwoSortedArrays extends CodeChallenge<MedianOfTwoSortedArra
 
     @Override
     protected Double test(Input input) {
+
         return null;
     }
 

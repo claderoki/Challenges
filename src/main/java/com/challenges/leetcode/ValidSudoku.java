@@ -1,4 +1,4 @@
-package com.challenges;
+package com.challenges.leetcode;
 
 import com.challenges.base.CodeChallenge;
 import com.challenges.base.InputOutput;
