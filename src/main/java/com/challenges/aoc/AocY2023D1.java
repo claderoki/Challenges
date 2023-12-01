@@ -5,12 +5,13 @@ import com.challenges.base.InputOutput;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /** Completed
- * https://adventofcode.com/2023/day/1
+ * <a href="https://adventofcode.com/2023/day/1">...</a>
  */
 public class AocY2023D1 extends CodeChallenge<String, Integer> {
-    private static Map<String, Character> mapping = Map.of(
+    Map<String, Character> mapped = Map.of(
         "one", '1',
         "two", '2',
         "three", '3',
@@ -21,48 +22,63 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
         "eight", '8',
         "nine", '9'
     );
+    private static final int largestPossible = 5;
 
-    private char findSpelledOut(String input, int start, int increment) {
-        int end = start;
-
-        // until a digit is hit or 5 characters are passed.
-        while (!mapping.containsKey(input.substring(start, end)) && start-end > 5) {
-
+    private Optional<Character> findDigit(String input, int start, boolean forwards) {
+        char initial = input.charAt(start);
+        if (Character.isDigit(initial)){
+            return Optional.of(initial);
         }
 
-        return mapping.get(input.substring(start, end));
+        StringBuilder digits = new StringBuilder();
+
+        int j = 0;
+        int i = start;
+        while (j <= largestPossible || (i >= 0 && i < input.length()-1)) {
+            char character = input.charAt(i);
+            if (Character.isDigit(character)) {
+                return Optional.of(character);
+            }
+            if (forwards) {
+                digits.append(character);
+            } else {
+                digits.insert(0, character);
+            }
+
+            var map = mapped.get(digits.toString());
+            if (map != null) {
+                return Optional.of(map);
+            }
+
+            i += (forwards ? 1 : -1);
+            j++;
+        }
+
+        return Optional.empty();
     }
 
-    private Integer firstAndLastDigits(String input) {
+    private Integer findCalibrationValue(String input) {
         StringBuilder digits = new StringBuilder();
         int i = 0;
         int increment = 1;
         while (digits.length() < 2) {
-            char character = input.charAt(i);
-            if (Character.isDigit(character)) {
-
-            } else {
-
-            }
-
-
-            if (Character.isDigit(character)) {
-                digits.append(character);
+            var spelled = findDigit(input, i, increment == 1);
+            if (spelled.isPresent()) {
+                digits.append(spelled.get());
                 increment = -1;
                 i = input.length()-1;
             } else {
                 i += increment;
             }
         }
-        System.out.println(digits);
+        System.out.println(input + " == " + digits);
         return Integer.parseInt(digits.toString());
     }
 
-    @Override
-    protected Integer test(String input) {
+    public Integer test(String input) {
         return input
             .lines()
-            .mapToInt(this::firstAndLastDigits)
+            .mapToInt(this::findCalibrationValue)
             .sum();
     }
 
@@ -70,6 +86,7 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
     protected List<InputOutput<String, Integer>> getInputAndDesiredOutputs() {
         return List.of(
             io(aoc(2023, 1, 'e'), 281)
+//            io(aoc(2023, 1), 54100) // note: 54109 is not correct
         );
     }
 }
