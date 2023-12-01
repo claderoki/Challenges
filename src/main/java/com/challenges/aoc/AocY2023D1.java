@@ -37,7 +37,7 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
         while (j <= largestPossible || (i >= 0 && i < input.length()-1)) {
             char character = input.charAt(i);
             if (Character.isDigit(character)) {
-                return Optional.of(character);
+                return Optional.empty();
             }
             if (forwards) {
                 digits.append(character);
