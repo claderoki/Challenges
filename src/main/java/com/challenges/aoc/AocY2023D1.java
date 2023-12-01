@@ -10,23 +10,27 @@ import java.util.Map;
  * https://adventofcode.com/2023/day/1
  */
 public class AocY2023D1 extends CodeChallenge<String, Integer> {
-    private static Map<String, String> mapping = Map.of(
-        "one", "1",
-        "two", "2",
-        "three", "3",
-        "four", "4",
-        "five", "5",
-        "six", "6",
-        "seven", "7",
-        "eight", "8",
-        "nine", "9"
+    private static Map<String, Character> mapping = Map.of(
+        "one", '1',
+        "two", '2',
+        "three", '3',
+        "four", '4',
+        "five", '5',
+        "six", '6',
+        "seven", '7',
+        "eight", '8',
+        "nine", '9'
     );
 
-    private Integer findSpelledOut(String input, int start, int increment) {
+    private char findSpelledOut(String input, int start, int increment) {
         int end = start;
-        while (true) {
+
+        // until a digit is hit or 5 characters are passed.
+        while (!mapping.containsKey(input.substring(start, end)) && start-end > 5) {
 
         }
+
+        return mapping.get(input.substring(start, end));
     }
 
     private Integer firstAndLastDigits(String input) {
@@ -35,6 +39,13 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
         int increment = 1;
         while (digits.length() < 2) {
             char character = input.charAt(i);
+            if (Character.isDigit(character)) {
+
+            } else {
+
+            }
+
+
             if (Character.isDigit(character)) {
                 digits.append(character);
                 increment = -1;
@@ -51,12 +62,6 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
     protected Integer test(String input) {
         return input
             .lines()
-            .map(c -> {
-                for(var entry: mapping.entrySet()) {
-                    c = c.replace(entry.getKey(), entry.getValue());
-                }
-                return c;
-            })
             .mapToInt(this::firstAndLastDigits)
             .sum();
     }
