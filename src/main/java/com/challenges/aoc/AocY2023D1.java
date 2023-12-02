@@ -1,16 +1,13 @@
 package com.challenges.aoc;
 
-import com.challenges.base.CodeChallenge;
-import com.challenges.base.InputOutput;
-
-import java.util.List;
+import com.challenges.base.AdventOfCode;
 import java.util.Map;
 import java.util.Optional;
 
 /** Completed
  * <a href="https://adventofcode.com/2023/day/1">...</a>
  */
-public class AocY2023D1 extends CodeChallenge<String, Integer> {
+public class AocY2023D1 extends AdventOfCode<Integer> {
     Map<String, Character> mapped = Map.of(
         "one", '1',
         "two", '2',
@@ -24,10 +21,16 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
     );
     private static final int largestPossible = 5;
 
-    private Optional<Character> findDigit(String input, int start, boolean forwards) {
+    protected AocY2023D1() {
+        super(2023, 1);
+    }
+
+    private Optional<Character> findDigit(String input, int start, boolean forwards, boolean includeSpelledOut) {
         char initial = input.charAt(start);
         if (Character.isDigit(initial)) {
             return Optional.of(initial);
+        } else if (!includeSpelledOut) {
+            return Optional.empty();
         }
 
         StringBuilder digits = new StringBuilder();
@@ -57,12 +60,12 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
         return Optional.empty();
     }
 
-    private Integer findCalibrationValue(String input) {
+    private Integer findCalibrationValue(String input, boolean includeSpelledOut) {
         StringBuilder digits = new StringBuilder();
         int i = 0;
         int increment = 1;
         while (digits.length() < 2) {
-            var spelled = findDigit(input, i, increment == 1);
+            var spelled = findDigit(input, i, increment == 1, includeSpelledOut);
             if (spelled.isPresent()) {
                 digits.append(spelled.get());
                 increment = -1;
@@ -75,18 +78,19 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
         return Integer.parseInt(digits.toString());
     }
 
-    public Integer test(String input) {
+    @Override
+    protected Integer part1(String input) {
         return input
             .lines()
-            .mapToInt(this::findCalibrationValue)
+            .mapToInt(c -> findCalibrationValue(c, false))
             .sum();
     }
 
     @Override
-    protected List<InputOutput<String, Integer>> getInputAndDesiredOutputs() {
-        return List.of(
-            io(aoc(2023, 1, 'e'), 281)
-//            io(aoc(2023, 1), 54100) // note: 54109 is not correct
-        );
+    protected Integer part2(String input) {
+        return input
+            .lines()
+            .mapToInt(c -> findCalibrationValue(c, true))
+            .sum();
     }
 }

@@ -1,5 +1,6 @@
 package com.challenges.aoc;
 
+import com.challenges.base.AdventOfCode;
 import com.challenges.base.CodeChallenge;
 import com.challenges.base.InputOutput;
 
@@ -8,7 +9,11 @@ import java.util.*;
 /** Completed
  * <a href="https://adventofcode.com/2023/day/1">...</a>
  */
-public class AocY2023D2 extends CodeChallenge<String, Integer> {
+public class AocY2023D2 extends AdventOfCode<Integer> {
+    public AocY2023D2() {
+        super(2023, 2);
+    }
+
     private static final Map<Colour, Integer> maximum = Map.of(
         Colour.RED, 12,
         Colour.BLUE, 14,
@@ -92,28 +97,20 @@ public class AocY2023D2 extends CodeChallenge<String, Integer> {
         return minimums.get(Colour.GREEN) * minimums.get(Colour.BLUE) * minimums.get(Colour.RED);
     }
 
-    public Integer test(String input) {
-//        return input
-//            .lines()
-//            .map(this::toGame)
-//            .filter(this::isValid)
-//            .mapToInt(Game::id)
-//            .sum();
+    public Integer part1(String input) {
+        return input
+            .lines()
+            .map(this::toGame)
+            .filter(this::isValid)
+            .mapToInt(Game::id)
+            .sum();
+    }
+
+    public Integer part2(String input) {
         return input
             .lines()
             .map(this::toGame)
             .mapToInt(this::toMinimumPower)
             .sum();
-    }
-
-    @Override
-    protected List<InputOutput<String, Integer>> getInputAndDesiredOutputs() {
-        return List.of(
-//            io(aoc(2023, 2, 'e'), 8),
-//            io(aoc(2023, 2), 2369)
-            io(aoc(2023, 2, 'e'), 2286),
-            io(aoc(2023, 2), 2369)
-
-        );
     }
 }
