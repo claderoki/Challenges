@@ -26,7 +26,7 @@ public class AocY2023D1 extends CodeChallenge<String, Integer> {
 
     private Optional<Character> findDigit(String input, int start, boolean forwards) {
         char initial = input.charAt(start);
-        if (Character.isDigit(initial)){
+        if (Character.isDigit(initial)) {
             return Optional.of(initial);
         }
 
