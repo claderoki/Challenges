@@ -3,7 +3,6 @@ package com.challenges.aoc;
 import com.challenges.base.AdventOfCode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Completed
@@ -16,52 +15,42 @@ public class AocY2023D3 extends AdventOfCode<Integer> {
 
     record Digit(int line, int index, Integer value) {}
 
-    private Optional<Digit> findDigits(List<String> lines, int lineIndex, int center) {
-        StringBuilder digits = new StringBuilder();
-        if (lineIndex < 0 || lineIndex >= lines.size()) {
+    record PartNumberGroup(Character symbol, List<Integer> numbers) {}
+
+    private Optional<Digit> findDigits(String[] lines, int lineIndex, int center) {
+        if (lineIndex < 0 || lineIndex >= lines.length || center < 0) {
             return Optional.empty();
         }
-        String line = lines.get(lineIndex);
-        if (center > 0 && center < line.length() && !Character.isDigit(line.charAt(center))) {
+
+        String line = lines[lineIndex];
+        if (center >= line.length() || !Character.isDigit(line.charAt(center))) {
             return Optional.empty();
         }
-        center = Math.min(Math.max(center, 0), line.length()-1);
 
         int start = center;
-        for(int i = center; i <= line.length()-1; i++) {
-            char character = line.charAt(i);
-            if (Character.isDigit(character)) {
-                digits.append(character);
-            } else {
-                break;
-            }
+        StringBuilder digits = new StringBuilder();
+        for (int i = center; i < line.length() && Character.isDigit(line.charAt(i)); i++) {
+            digits.append(line.charAt(i));
         }
-        for(int i = center-1; i >= 0; i--) {
-            char character = line.charAt(i);
-            if (Character.isDigit(character)) {
-                digits.insert(0, character);
-                start = i;
-            } else {
-                break;
-            }
+        for (int i = center - 1; i >= 0 && Character.isDigit(line.charAt(i)); i--) {
+            digits.insert(0, line.charAt(i));
+            start = i;
         }
 
-        if (digits.isEmpty()) {
+        if (digits.length() == 0) {
             return Optional.empty();
         }
         return Optional.of(new Digit(lineIndex, start, Integer.parseInt(digits.toString())));
     }
 
-    public Integer part1(String input) {
-        List<Digit> partNumbers = new ArrayList<>();
-        List<String> lines = input.lines().toList();
-        for (int j = 0; j < lines.size(); j++) {
-            System.out.println("Line " + (j+1));
-            final String line = lines.get(j);
+    private Stream<PartNumberGroup> streamGroups(String input) {
+        List<PartNumberGroup> groups = new ArrayList<>();
+        String[] lines = input.split("\n");
+        for (int j = 0; j < lines.length; j++) {
+            final String line = lines[j];
             for (int i = 0; i < line.length(); i++) {
                 char character = line.charAt(i);
-                boolean isSymbol = character != '.' && character != '\n' && !Character.isDigit(character);
-                if (isSymbol) {
+                if (character != '.' && !Character.isDigit(character)) {
                     int LINE = j;
                     int DOWN = LINE+1;
                     int UP = LINE-1;
@@ -69,47 +58,7 @@ public class AocY2023D3 extends AdventOfCode<Integer> {
                     int RIGHT = HERE+1;
                     int LEFT = HERE-1;
 
-                    var found = Stream.of(
-                            findDigits(lines, UP, HERE),
-                            findDigits(lines, UP, LEFT),
-                            findDigits(lines, UP, RIGHT),
-                            findDigits(lines, DOWN, HERE),
-                            findDigits(lines, DOWN, LEFT),
-                            findDigits(lines, DOWN, RIGHT),
-                            findDigits(lines, LINE, LEFT),
-                            findDigits(lines, LINE, RIGHT)
-                        )
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                        .collect(Collectors.toSet());
-
-                    var readable = found.stream().map(c -> c.value.toString()).collect(Collectors.joining(", "));
-                    System.out.printf("numbers near %s found: %s%n", character, readable);
-
-                    partNumbers.addAll(found);
-                }
-            }
-        }
-        return partNumbers.stream().mapToInt(c -> c.value).sum();
-    }
-
-    public Integer part2(String input) {
-        long total = 0;
-        List<String> lines = input.lines().toList();
-        for (int j = 0; j < lines.size(); j++) {
-            final String line = lines.get(j);
-            for (int i = 0; i < line.length(); i++) {
-                char character = line.charAt(i);
-                boolean isSymbol = character != '.' && character != '\n' && !Character.isDigit(character);
-                if (isSymbol) {
-                    int LINE = j;
-                    int DOWN = LINE+1;
-                    int UP = LINE-1;
-                    int HERE = i;
-                    int RIGHT = HERE+1;
-                    int LEFT = HERE-1;
-
-                    var found = Stream.of(
+                    List<Integer> found = Stream.of(
                             findDigits(lines, UP, HERE),
                             findDigits(lines, UP, LEFT),
                             findDigits(lines, UP, RIGHT),
@@ -124,17 +73,32 @@ public class AocY2023D3 extends AdventOfCode<Integer> {
                         .distinct()
                         .map(Digit::value)
                         .toList();
-
-                    if (character == '*') {
-                        if (found.size() == 2) {
-                            total += ((long) found.get(0) * found.get(1));
-                            System.out.printf("numbers near %s found: %s * %s%n", character, found.get(0), found.get(1));
-                        }
-                    }
+                    groups.add(new PartNumberGroup(character, found));
                 }
             }
         }
-        return Math.toIntExact(total);
+        return groups.stream();
+    }
+
+    public Integer part1(String input) {
+        return streamGroups(input)
+//            .peek((s) -> {
+//                var readable = s.numbers().stream().map(Object::toString).collect(Collectors.joining(", "));
+//                System.out.printf("numbers near %s found: %s%n", s, readable);
+//            })
+            .flatMap(c -> c.numbers.stream())
+            .mapToInt(c -> c)
+            .sum();
+
+    }
+
+    public Integer part2(String input) {
+        return streamGroups(input)
+            .filter(c -> c.symbol() == '*' && c.numbers.size() == 2)
+//            .peek((c) -> System.out.printf("numbers near %s found: %s * %s%n", c.symbol, c.numbers.get(0), c.numbers().get(1)))
+            .mapToInt(c -> c.numbers().get(0) * c.numbers().get(1))
+            .sum();
+
     }
 
     public void run() {
