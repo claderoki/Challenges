@@ -45,7 +45,6 @@ public class AocY2023D2 extends AdventOfCode<Integer> {
         Integer id = null;
         for (int i = 0; i < raw.length(); i++) {
             char character = raw.charAt(i);
-
             if (Character.isDigit(character)) {
                 StringBuilder digitsRaw =new StringBuilder();
                 do {

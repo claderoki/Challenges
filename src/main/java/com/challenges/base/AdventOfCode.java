@@ -1,10 +1,11 @@
 package com.challenges.base;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 public abstract class AdventOfCode<O> {
     private final int year;
@@ -19,10 +20,13 @@ public abstract class AdventOfCode<O> {
     protected abstract O part2(String input);
 
     protected String input(Character prefix) {
-        var stream = getClass().getResourceAsStream("/aoc/%s/%s%s.input".formatted(year, day, (prefix == null ? "" : "."+prefix)));
-        return new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))
-            .lines()
-            .collect(Collectors.joining("\n"));
+        try (var stream = getClass().getResourceAsStream("/aoc/%s/%s%s.input".formatted(year, day, (prefix == null ? "" : "."+prefix)))) {
+            return new BufferedReader(new InputStreamReader(Objects.requireNonNull(stream), StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected String input() {
