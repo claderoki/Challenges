@@ -16,34 +16,18 @@ public class AocY2023D4 extends AdventOfCode<Integer> {
     }
 
     private int getMatches(String line) {
-        int wins = 0;
-        boolean passed = false;
-        boolean winning = true;
-        List<Integer> winningNumbers = new ArrayList<>();
-        StringBuilder currentDigit = new StringBuilder();
-        for (int i = 0; i < line.length(); i++) {
-            boolean digit = false;
-            char character = line.charAt(i);
-            if (character == ':') {
-                passed = true;
-            } else if (character == '|') {
-                winning = false;
-            } else if (passed && Character.isDigit(character)) {
-                currentDigit.append(character);
-                digit = true;
-            }
+        int matches = 0;
+        String[] numbers = line.split(":")[1].split("\\|");
+        var winning = Arrays.stream(numbers[0].split(" "))
+            .filter(c -> !c.isBlank() && !c.equals(" "))
+            .toList();
 
-            if ((!digit || i == line.length()-1) && !currentDigit.isEmpty()) {
-                Integer number = Integer.parseInt(currentDigit.toString());
-                currentDigit.delete(0, currentDigit.length());
-                if (winning) {
-                    winningNumbers.add(number);
-                } else if (winningNumbers.contains(number)) {
-                    wins++;
-                }
+        for(var base: numbers[1].split(" ")) {
+            if (winning.contains(base)) {
+                matches++;
             }
         }
-        return wins;
+        return matches;
     }
 
     public Integer part1(String input) {
@@ -73,7 +57,9 @@ public class AocY2023D4 extends AdventOfCode<Integer> {
 
     public void run() {
         // 26426 == correct
-        System.out.println("Part 1 result => " + part1(input()));
+        try (var a = new RunTimeTracker()) {
+            System.out.println("Part 1 result => " + part1(input()));
+        }
         // 6227972 == correct
         try (var a = new RunTimeTracker()) {
             System.out.println("Part 2 result => " + part2(input()));
