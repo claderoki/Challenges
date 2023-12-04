@@ -37,7 +37,7 @@ public class AocY2023D3 extends AdventOfCode<Integer> {
             start = i;
         }
 
-        if (digits.length() == 0) {
+        if (digits.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(new Digit(lineIndex, start, Integer.parseInt(digits.toString())));
@@ -82,23 +82,17 @@ public class AocY2023D3 extends AdventOfCode<Integer> {
 
     public Integer part1(String input) {
         return streamGroups(input)
-//            .peek((s) -> {
-//                var readable = s.numbers().stream().map(Object::toString).collect(Collectors.joining(", "));
-//                System.out.printf("numbers near %s found: %s%n", s, readable);
-//            })
             .flatMap(c -> c.numbers.stream())
             .mapToInt(c -> c)
             .sum();
-
     }
 
     public Integer part2(String input) {
         return streamGroups(input)
             .filter(c -> c.symbol() == '*' && c.numbers.size() == 2)
-//            .peek((c) -> System.out.printf("numbers near %s found: %s * %s%n", c.symbol, c.numbers.get(0), c.numbers().get(1)))
+            .peek((c) -> System.out.printf("numbers near %s found: %s * %s%n", c.symbol, c.numbers.get(0), c.numbers().get(1)))
             .mapToInt(c -> c.numbers().get(0) * c.numbers().get(1))
             .sum();
-
     }
 
     public void run() {
