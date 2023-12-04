@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 /** Completed
- * <a href="https://adventofcode.com/2023/day/1">...</a>
+ * <a href="https://adventofcode.com/2023/day/4">Link to challenge</a>
  */
 public class AocY2023D4 extends AdventOfCode<Integer> {
     public AocY2023D4() {
@@ -57,11 +57,11 @@ public class AocY2023D4 extends AdventOfCode<Integer> {
 
     public void run() {
         // 26426 == correct
-        try (var a = new RunTimeTracker()) {
+        try (var ignore = new RunTimeTracker()) {
             System.out.println("Part 1 result => " + part1(input()));
         }
         // 6227972 == correct
-        try (var a = new RunTimeTracker()) {
+        try (var ignore = new RunTimeTracker()) {
             System.out.println("Part 2 result => " + part2(input()));
         }
     }

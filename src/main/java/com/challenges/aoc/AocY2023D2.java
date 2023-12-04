@@ -7,7 +7,7 @@ import com.challenges.base.InputOutput;
 import java.util.*;
 
 /** Completed
- * <a href="https://adventofcode.com/2023/day/1">...</a>
+ * <a href="https://adventofcode.com/2023/day/2">Link to challenge</a>
  */
 public class AocY2023D2 extends AdventOfCode<Integer> {
     public AocY2023D2() {

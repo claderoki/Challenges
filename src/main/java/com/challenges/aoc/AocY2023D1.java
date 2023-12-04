@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /** Completed
- * <a href="https://adventofcode.com/2023/day/1">...</a>
+ * <a href="https://adventofcode.com/2023/day/1">Link to challenge</a>
  */
 public class AocY2023D1 extends AdventOfCode<Integer> {
     Map<String, Character> mapped = Map.of(

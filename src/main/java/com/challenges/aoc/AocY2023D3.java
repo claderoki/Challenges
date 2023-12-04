@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /** Completed
- * <a href="https://adventofcode.com/2023/day/1">...</a>
+ * <a href="https://adventofcode.com/2023/day/3">Link to challenge</a>
  */
 public class AocY2023D3 extends AdventOfCode<Integer> {
     public AocY2023D3() {
