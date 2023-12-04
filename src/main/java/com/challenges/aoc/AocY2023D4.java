@@ -56,11 +56,9 @@ public class AocY2023D4 extends AdventOfCode<Integer> {
     }
 
     public void run() {
-        // 26426 == correct
         try (var ignore = new RunTimeTracker()) {
             System.out.println("Part 1 result => " + part1(input()));
         }
-        // 6227972 == correct
         try (var ignore = new RunTimeTracker()) {
             System.out.println("Part 2 result => " + part2(input()));
         }
