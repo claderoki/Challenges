@@ -5,6 +5,9 @@ import com.challenges.base.RunTimeTracker;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Completed
@@ -17,9 +20,9 @@ public class AocY2023D4 extends AdventOfCode<Integer> {
 
     private int getMatches(String line) {
         int matches = 0;
-        String[] numbers = line.split(":")[1].split("\\|");
+        String[] numbers = line.substring(line.indexOf(":")).split("\\|");
         var winning = Arrays.stream(numbers[0].split(" "))
-            .filter(c -> !c.isBlank() && !c.equals(" "))
+            .filter(c -> !c.isBlank())
             .toList();
 
         for(var base: numbers[1].split(" ")) {
