@@ -9,15 +9,25 @@ import java.util.function.Supplier;
 /** Completed
  * <a href="https://adventofcode.com/2023/day/5">Link to challenge</a>
  */
-public class AocY2023D5 extends AdventOfCode<Integer> {
+public class AocY2023D5 extends AdventOfCode<Long> {
     public AocY2023D5() {
         super(2023, 5);
     }
 
-    record Range(int destinationStart, int sourceStart, int range) {}
-    record RangeGroup(List<Range> ranges) {}
+    record Range(long destinationStart, long sourceStart, long range) {}
 
-    record Almanac(Set<Integer> seeds,
+    record RangeGroup(List<Range> ranges) {
+        public long destination(long value) {
+            for(var range: ranges) {
+                if (value >= range.sourceStart && value <= (range.sourceStart+range.range)) {
+                    return range.destinationStart + (value - range.sourceStart);
+                }
+            }
+            return value;
+        }
+    }
+
+    record Almanac(List<Long> seeds,
                    RangeGroup seedToSoil,
                    RangeGroup soilToFertiliser,
                    RangeGroup fertiliserToWater,
@@ -25,25 +35,38 @@ public class AocY2023D5 extends AdventOfCode<Integer> {
                    RangeGroup lightToTemperature,
                    RangeGroup temperatureToHumidity,
                    RangeGroup humidityToLocation
-    ) {}
+    ) {
+        public long findLocation(long seed) {
+            var soil = seedToSoil.destination(seed);
+            var fertiliser = soilToFertiliser.destination(soil);
+            var water = fertiliserToWater.destination(fertiliser);
+            var light = waterToLight.destination(water);
+            var temperature = lightToTemperature.destination(light);
+            var humidity = temperatureToHumidity.destination(temperature);
+            return humidityToLocation.destination(humidity);
+        }
+
+    }
 
     private Almanac parse(String input) {
         Almanac almanac = new Almanac(
-            new HashSet<>(),
+            new ArrayList<>(),
             new RangeGroup(new ArrayList<>()),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>()
+            new RangeGroup(new ArrayList<>()),
+            new RangeGroup(new ArrayList<>()),
+            new RangeGroup(new ArrayList<>()),
+            new RangeGroup(new ArrayList<>()),
+            new RangeGroup(new ArrayList<>()),
+            new RangeGroup(new ArrayList<>())
         );
 
         String[] lines = input.split("\n");
         String first = lines[0];
-        List<Integer> d = Arrays.stream(first.substring(first.indexOf(":")+1).split(" ")).filter(c -> !c.isBlank()).map((Integer::parseInt)).toList();
+        List<Long> d = Arrays.stream(first.substring(first.indexOf(":")+1)
+            .split(" "))
+            .filter(c -> !c.isBlank()).map((Long::parseLong)).toList();
         almanac.seeds.addAll(d);
-        Supplier<List<Range>> getter = null;
+        Supplier<RangeGroup> getter = null;
         for(int i = 1; i < lines.length; i++) {
             String line = lines[i];
             boolean mapped = true;
@@ -59,33 +82,54 @@ public class AocY2023D5 extends AdventOfCode<Integer> {
             }
 
             if (!mapped && !line.isBlank()) {
-                List<Integer> digits = Arrays.stream(line.split(" ")).map((Integer::parseInt)).toList();
-                getter.get().add(
-                    new Range(digits.get(0), digits.get(1), digits.get(2))
-                );
+                List<Long> digits = Arrays.stream(line.split(" ")).map((Long::parseLong)).toList();
+                getter.get().ranges().add(new Range(digits.get(0), digits.get(1), digits.get(2)));
             }
         }
-
-
         return almanac;
     }
 
-    public Integer part1(String input) {
+    public Long part1(String input) {
         Almanac almanac = parse(input);
-        var a = "";
-        return 0;
+        return almanac.seeds.stream().mapToLong(almanac::findLocation).min().getAsLong();
     }
 
-    public Integer part2(String input) {
-        return 0;
+    public int calculatePercentage(long obtained, long total) {
+        return (int)(obtained * 100 / total);
+    }
+
+    public Long part2(String input) {
+        long lowest = Long.MAX_VALUE;
+        Almanac almanac = parse(input);
+        for (int i = 0; i < almanac.seeds.size(); i+=2) {
+            int percentage = 0;
+            long start = almanac.seeds.get(i);
+            long range = almanac.seeds.get(i+1);
+            System.out.println("Processing range %s - %s".formatted(start, start+range));
+            long end = start+range;
+            for (long j = start; j < end; j++) {
+                long loc = almanac.findLocation(j);
+                if (loc < lowest) {
+                    lowest = loc;
+                }
+                int currentPercentage = calculatePercentage(j-start, end-start);
+                if (currentPercentage != percentage) {
+                    System.out.println(currentPercentage + "% finished");
+                    percentage = currentPercentage;
+                }
+            }
+        }
+
+        System.out.println("100% finished");
+        return lowest;
     }
 
     public void run() {
         try (var ignore = new RunTimeTracker()) {
-            System.out.println("Part 1 result => " + part1(input('e')));
+            System.out.println("Part 1 result => " + part1(input()));
         }
         try (var ignore = new RunTimeTracker()) {
-//            System.out.println("Part 2 result => " + part2(input()));
+            System.out.println("Part 2 result => " + part2(input()));
         }
     }
 }
