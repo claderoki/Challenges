@@ -5,7 +5,7 @@ import com.challenges.base.AdventOfCode;
 import java.util.*;
 import java.util.stream.Stream;
 
-/** Completed
+/**
  * <a href="https://adventofcode.com/2023/day/3">Link to challenge</a>
  */
 public class AocY2023D3 extends AdventOfCode<Integer> {

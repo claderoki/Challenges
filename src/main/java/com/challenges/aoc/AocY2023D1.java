@@ -4,7 +4,7 @@ import com.challenges.base.AdventOfCode;
 import java.util.Map;
 import java.util.Optional;
 
-/** Completed
+/**
  * <a href="https://adventofcode.com/2023/day/1">Link to challenge</a>
  */
 public class AocY2023D1 extends AdventOfCode<Integer> {

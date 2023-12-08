@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/** Completed
+/**
  * <a href="https://adventofcode.com/2023/day/4">Link to challenge</a>
  */
 public class AocY2023D4 extends AdventOfCode<Integer> {

@@ -6,7 +6,7 @@ import com.challenges.base.RunTimeTracker;
 import java.util.*;
 import java.util.function.Supplier;
 
-/** Completed
+/**
  * <a href="https://adventofcode.com/2023/day/5">Link to challenge</a>
  */
 public class AocY2023D5 extends AdventOfCode<Long> {
