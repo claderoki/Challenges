@@ -7,6 +7,6 @@ import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
-        new AocY2023D8().run();
+        new AocY2023D7().run();
     }
 }

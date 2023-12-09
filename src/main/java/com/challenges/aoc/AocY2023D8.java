@@ -4,8 +4,7 @@ import com.challenges.base.AdventOfCode;
 import com.challenges.base.RunTimeTracker;
 
 import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * <a href="https://adventofcode.com/2023/day/8">Link to challenge</a>
@@ -95,13 +94,11 @@ public class AocY2023D8 extends AdventOfCode<Long> {
         return a;
     }
 
-    private static long lcm(long a, long b)
-    {
+    private static long lcm(long a, long b) {
         return a * (b / gcd(a, b));
     }
 
-    private static long lcm(List<Long> input)
-    {
+    private static long lcm(List<Long> input) {
         long result = input.get(0);
         for (var digit: input) {
             result = lcm(result, digit);
@@ -129,11 +126,12 @@ public class AocY2023D8 extends AdventOfCode<Long> {
             }
             totalSteps.add(steps);
         }
+        System.out.println(totalSteps.stream().map(c -> c.toString()).collect(Collectors.joining(", ")));
         return lcm(totalSteps);
     }
 
     public void run() {
-        String input = input();
+        String input = input('l');
         try (var ignore = new RunTimeTracker()) {
             System.out.println("Part 1 result => " + part1(input));
         }
